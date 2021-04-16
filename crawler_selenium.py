@@ -53,12 +53,10 @@ def listarCategorias():
         div = driver.find_elements_by_class_name("edt-root")
         for divs in div:
             if (divs.text).find("BHZ-INFRAREDES") and divs.text != "":
-                div = div[div.index(divs)]
+                index = div.index(divs)
+                div = driver.find_elements_by_class_name("edt-root")[div.index(divs)]
+                exportar(index, div)
                 break
-        div = div.find_elements_by_class_name("edt-item")
-        for divs in div:
-            divs.click()
-            time.sleep(5)
         driver.quit()
         raise SystemExit
         '''exportar()'''
