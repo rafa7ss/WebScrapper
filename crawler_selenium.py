@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-driver_path = 'chromedriver'
+driver_path = 'drivers/chromedriver'
 options = Options()
 options.headless = False
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -42,36 +42,37 @@ def login2():
         button = driver.find_element_by_class_name('campo-buttom')
         time.sleep(6)
         button.click()
-        listarCategorias()
-
-def listarCategorias():
-    try:
-        element = WebDriverWait(driver, 30).until(
-            EC.presence_of_element_located((By.CLASS_NAME, "toa-panel-content edtree"))
-        )
-    finally:
-        div = driver.find_elements_by_class_name("edt-root")
-        for divs in div:
-            if (divs.text).find("BHZ-INFRAREDES") and divs.text != "":
-                index = div.index(divs)
-                div = driver.find_elements_by_class_name("edt-root")[div.index(divs)]
-                exportar(index, div)
-                break
-        driver.quit()
-        raise SystemExit
-        '''exportar()'''
+        exportar()
 
 def exportar():
     try:
-        element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CLASS_NAME, "toa-twopanel-first-panel ui-droppable"))
+        element = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.XPATH, "//div[contains(@class,'toa-panel-content')][contains(@class, 'edtree')]"))
         )
     finally:
-        button = driver.find_element_by_class_name('toa-button toa-view-control-button-menu')
-        button.click()
-        time.sleep(1)
-        button = driver.find_element_by_name('export_queue')
-        button.click()
-        time.sleep(1)
+        pai = driver.find_elements_by_class_name("edt-root")
+        for filho in pai:
+            if (filho.text).find("BHZ-INFRAREDES") != -1:
+                index = pai.index(filho)
+                pai = driver.find_elements_by_xpath("//div[contains(@class,'edt-root')]")[index]
+                i = 0
+                while (driver.find_elements_by_xpath("//div[contains(@class,'edt-root')][contains(., 'BHZ-INFRAREDES')]/div[contains(@class,'edt-item')]")[i]).text != "":
+                    categoria = driver.find_elements_by_xpath("//div[contains(@class,'edt-root')][contains(., 'BHZ-INFRAREDES')]/div[contains(@class,'edt-item')]")[i]
+                    categoria.click()
+                    time.sleep(1)
+                    acao = driver.find_element_by_name("-82130")
+                    acao.click()
+                    try:
+                        element = WebDriverWait(driver, 5).until(
+                            EC.presence_of_element_located((By.NAME, "export_queue"))
+                        )
+                    finally:
+                        export = driver.find_element_by_name("export_queue")
+                        export.click()
+                        i += 1
+                    time.sleep(1)
+                break
+        driver.quit()
+        raise SystemExit
 
 login1()
