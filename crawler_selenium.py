@@ -1,3 +1,4 @@
+#Imports
 import time
 import dados
 import os
@@ -7,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+#Variables
 driver_path = 'drivers/chromedriver'
 download_dir = "C:\\selenium"
 options = Options()
@@ -17,6 +19,7 @@ options.add_argument("--window-size=1400,800")
 driver = webdriver.Chrome(options=options, executable_path=driver_path)
 driver.get(dados.url)
 
+#Waits until element presence is located, fills the form with the credencials and submit the form
 def login1():
     try:
         element = WebDriverWait(driver, 10).until(
@@ -32,6 +35,7 @@ def login1():
         button.click()
         login2()
 
+#Similar as the function above, but with diferent methods to find the elements on the DOM
 def login2():
     try:
         element = WebDriverWait(driver, 10).until(
@@ -47,6 +51,8 @@ def login2():
         button.click()
         exportar()
 
+#Finds the parent element, lists all the childrem of the selected parent and clicks on them
+#After all of this, the function closes the driver and the script
 def exportar():
     try:
         element = WebDriverWait(driver, 20).until(
@@ -82,3 +88,6 @@ def exportar():
         raise SystemExit
 
 login1()
+
+#Disclaimer: Some variables may have be named in Brazilian portuguese,
+#so var filho = child and var pai = parent
