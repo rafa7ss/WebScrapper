@@ -1,5 +1,6 @@
 import time
 import dados
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -7,8 +8,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 driver_path = 'drivers/chromedriver'
+download_dir = "C:\\selenium"
 options = Options()
-options.headless = False
+options.add_argument("--headless")
+options.add_argument('--no-sandbox')
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 options.add_argument("--window-size=1400,800")
 driver = webdriver.Chrome(options=options, executable_path=driver_path)
@@ -50,6 +53,9 @@ def exportar():
             EC.presence_of_element_located((By.XPATH, "//div[contains(@class,'toa-panel-content')][contains(@class, 'edtree')]"))
         )
     finally:
+        driver.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
+        params = {'cmd':'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': download_dir}}
+        driver.execute("send_command", params)
         pai = driver.find_elements_by_class_name("edt-root")
         for filho in pai:
             if (filho.text).find("BHZ-INFRAREDES") != -1:
