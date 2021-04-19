@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 #Variables
 driver_path = 'drivers/chromedriver'
-download_dir = "C:\\selenium"
+download_dir = "D:\\selenium"
 options = Options()
 options.add_argument("--headless")
 options.add_argument('--no-sandbox')
@@ -89,5 +89,5 @@ def exportar():
 
 login1()
 
-#Disclaimer: Some variables may have be named in Brazilian portuguese,
+#Note: Some variables may have be named in Brazilian portuguese,
 #so var filho = child and var pai = parent
