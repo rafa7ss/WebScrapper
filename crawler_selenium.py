@@ -1,6 +1,7 @@
+#Import of file that contains all the variables needed
+import dados
 #Imports
 import time
-import dados
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -130,4 +131,4 @@ def exportar():
 login1()
 
 #Note: Some variables may have been named in Brazilian portuguese,
-#so var filho = child and var pai = parent
+#so var filho = child and var pai = parent and so on 😁
