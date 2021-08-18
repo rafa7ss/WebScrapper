@@ -53,7 +53,8 @@ def login2():
         time.sleep(6)
         button.click()
         abrirConfig()
-
+        
+#Opens the menu by clicking on the html element
 def abrirConfig():
     try:
         element = WebDriverWait(driver, 10).until(
@@ -68,6 +69,7 @@ def abrirConfig():
         
         configurar()
 
+#Selects a 'select' element, changes his value and submits the form
 def configurar():
     try:
         element = WebDriverWait(driver, 10).until(
@@ -92,7 +94,7 @@ def configurar():
 
         exportar()
 
-#Finds the parent element, lists all the childrem of the selected parent and clicks on them
+#Finds the parent element, lists all the childrem of the selected parent and clicks on them (Clicking on the children activates a file download)
 #After all of this, the function closes the driver and the script
 def exportar():
     try:
